@@ -2,7 +2,7 @@
 
 Il mio portfolio: app, siti e video. Scorri fino in fondo: c'è una sorpresa.
 
-**Sito:** https://gabriele2314.github.io/i-m-gabriele/
+**Sito:** https://i-m-gabriele.vercel.app/
 
 ## Cosa c'è dentro
 
@@ -31,4 +31,6 @@ Poi apri http://localhost:3000. I link del sito sono tutti in `lib/site.ts`.
 
 ## Pubblicazione
 
-A ogni push su `main`, GitHub Actions costruisce il sito e lo pubblica su GitHub Pages (`.github/workflows/deploy.yml`).
+A ogni push su `main` il sito si aggiorna da solo su **Vercel** (https://i-m-gabriele.vercel.app/). Una copia va anche su GitHub Pages tramite GitHub Actions (`.github/workflows/deploy.yml`).
+
+Le statistiche delle visite arrivano su Google Analytics (ID in `lib/site.ts`).

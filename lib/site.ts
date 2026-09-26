@@ -1,3 +1,8 @@
+export const site = {
+  url: "https://i-m-gabriele.vercel.app",
+  gaId: "G-BX8V25EZNX", // Google Analytics
+} as const;
+
 // Tutti i link del sito in un posto solo: cambiali qui.
 export const links = {
   github: "https://github.com/Gabriele2314",

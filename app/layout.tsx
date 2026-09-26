@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -19,6 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: "I'm Gabriele",
   description:
     "Sviluppo app, creo siti, monto video e gestisco canali YouTube. Il resto lo scopri scorrendo.",
@@ -27,6 +30,10 @@ export const metadata: Metadata = {
     description: "App, siti e video. Ma c'è una cosa che non ti ho ancora detto…",
     type: "website",
     locale: "it_IT",
+    url: "/",
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 
@@ -41,6 +48,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`dark ${archivo.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="grain min-h-full flex flex-col">{children}</body>
+      {/* solo sul sito pubblicato, così le prove sul computer non finiscono nelle statistiche */}
+      {process.env.NODE_ENV === "production" && <GoogleAnalytics gaId={site.gaId} />}
     </html>
   );
 }
