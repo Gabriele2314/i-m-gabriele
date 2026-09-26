@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# I'm Gabriele
 
-## Getting Started
+Il mio portfolio: app, siti e video. Scorri fino in fondo: c'è una sorpresa.
 
-First, run the development server:
+**Sito:** https://gabriele2314.github.io/i-m-gabriele/
+
+## Cosa c'è dentro
+
+- **Intro** in stile terminale (solo quando apri il sito)
+- **La rivelazione**: una storia che si svela mentre scorri
+- **Capitolo 01 – Piattino**, la mia prima app ([provala](https://gabriele2314.github.io/piattino/) · [codice](https://github.com/Gabriele2314/piattino))
+- **Capitolo 02 – Altri siti**, come [YT Downloader PRO](https://github.com/Gabriele2314/yt-downloader)
+- **Capitolo 03 – Video**: editor e manager di [Loris Bike](https://www.youtube.com/@Loris_Bikezz) e [Bike Life Peppe](https://www.youtube.com/@BikeLifePeppe)
+
+Funziona su telefono, tablet e computer, e rispetta l'impostazione «Riduci movimento».
+
+## Tecnologie
+
+Next.js (export statico) · TypeScript · Tailwind CSS · shadcn/ui · framer-motion / motion · lucide-react
+
+Componenti in `components/ui`: `shimmer-text.tsx` (titolo che luccica) e `container-scroll-animation.tsx` (la card 3D di Piattino che si raddrizza allo scroll).
+
+## Provarlo sul computer
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Poi apri http://localhost:3000. I link del sito sono tutti in `lib/site.ts`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Pubblicazione
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A ogni push su `main`, GitHub Actions costruisce il sito e lo pubblica su GitHub Pages (`.github/workflows/deploy.yml`).
