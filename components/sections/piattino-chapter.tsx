@@ -23,7 +23,7 @@ const FEATURES = [
   {
     icon: Camera,
     title: "Fotografa il piatto",
-    text: "Due modelli di Google lavorano direttamente sul telefono e riconoscono oltre 2.000 piatti, dalla carbonara al sushi.",
+    text: "PiattinoScan, addestrato apposta per Piattino, gira sul telefono e riconosce 192 cibi, dalla carbonara alla frutta di tutti i giorni.",
   },
   {
     icon: Scale,
@@ -96,7 +96,7 @@ function PiattinoScreen() {
             dentro.
           </p>
           <ul className="flex flex-wrap gap-2 text-sm">
-            {["2.024 piatti", "Senza internet", "Dai 9 anni"].map((chip) => (
+            {["192 cibi", "Senza internet", "Dai 9 anni"].map((chip) => (
               <li
                 key={chip}
                 className="rounded-full border border-white/15 px-3 py-1 text-zinc-200"

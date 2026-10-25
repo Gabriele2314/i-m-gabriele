@@ -11,9 +11,6 @@ export const links = {
   piattino: "https://gabriele2314.github.io/piattino/",
   piattinoRepo: "https://github.com/Gabriele2314/piattino",
 
-  ytDownloader: "https://gabriele2314.github.io/yt-downloader/",
-  ytDownloaderRepo: "https://github.com/Gabriele2314/yt-downloader",
-
   lorisBike: "https://www.youtube.com/@Loris_Bikezz",
   bikeLifePeppe: "https://www.youtube.com/@BikeLifePeppe",
 } as const;

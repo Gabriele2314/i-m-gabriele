@@ -12,7 +12,7 @@ import { ease } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 
 const LINES = [
-  "Ho creato un'app che riconosce oltre 2.000 piatti da una foto.",
+  "Ho creato un'app che riconosce 192 cibi da una foto.",
   "Ho messo online i miei siti, con tutto il codice su GitHub.",
   "Monto video e gestisco due canali YouTube.",
   "E adesso la parte che nessuno si aspetta…",

@@ -16,6 +16,12 @@ function CardLink({ href, children }: { href: string; children: React.ReactNode 
   );
 }
 
+// sulle 525 foto di prova di Piattino: cibo giusto al primo posto (%)
+const SCAN_BARS = [
+  { label: "PiattinoScan", value: 59.4, main: true },
+  { label: "Modelli di Google", value: 20, main: false },
+];
+
 export function SitesChapter() {
   return (
     <section id="siti" className="relative scroll-mt-14 px-4 py-20 md:px-10 md:py-32">
@@ -23,45 +29,48 @@ export function SitesChapter() {
         <Reveal>
           <ChapterLabel number="02">Non mi sono fermato</ChapterLabel>
           <h2 className="mt-5 max-w-3xl font-heading text-4xl font-medium tracking-tight text-balance md:text-6xl">
-            Altri siti. <span className="text-muted-foreground">Stessa fame.</span>
+            Altri progetti. <span className="text-muted-foreground">Stessa fame.</span>
           </h2>
         </Reveal>
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {/* YT Downloader PRO */}
+          {/* PiattinoScan */}
           <Reveal className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card">
-            <div className="flex h-44 flex-col justify-center gap-3 border-b border-border bg-[radial-gradient(circle_at_30%_20%,rgba(255,69,58,0.18),transparent_60%)] p-6">
-              <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">Qualità</p>
-              <ul className="flex flex-wrap gap-2" aria-label="Qualità disponibili">
-                {["4K HDR", "1440p", "1080p", "720p"].map((q, i) => (
-                  <li
-                    key={q}
-                    className={
-                      i === 0
-                        ? "rounded-md bg-foreground px-2.5 py-1 font-mono text-xs font-semibold text-background"
-                        : "rounded-md border border-border px-2.5 py-1 font-mono text-xs text-muted-foreground"
-                    }
-                  >
-                    {q}
+            <div className="flex h-44 flex-col justify-center gap-4 border-b border-border bg-[radial-gradient(circle_at_30%_20%,rgba(200,255,61,0.14),transparent_60%)] p-6">
+              <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">
+                Cibo giusto al primo posto
+              </p>
+              <ul className="space-y-3 font-mono text-xs" aria-label="Confronto di precisione sulle foto di prova">
+                {SCAN_BARS.map((b) => (
+                  <li key={b.label}>
+                    <div className="mb-1 flex justify-between">
+                      <span className={b.main ? "text-foreground" : "text-muted-foreground"}>{b.label}</span>
+                      <span className={b.main ? "text-signal" : "text-muted-foreground"}>{b.value}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-white/[0.06]">
+                      <div
+                        className={b.main ? "h-full rounded-full bg-signal" : "h-full rounded-full bg-white/30"}
+                        style={{ width: `${b.value}%` }}
+                      />
+                    </div>
                   </li>
                 ))}
               </ul>
-              <p className="font-mono text-xs text-muted-foreground">
-                60 fps · H.264 · VP9 · AV1
-              </p>
             </div>
             <div className="flex flex-1 flex-col gap-3 p-6">
-              <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">Sito web</p>
-              <h3 className="font-heading text-2xl font-medium">YT Downloader PRO</h3>
+              <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">
+                Intelligenza artificiale
+              </p>
+              <h3 className="font-heading text-2xl font-medium">PiattinoScan</h3>
               <p className="flex-1 text-muted-foreground">
-                Scarica video fino al 4K HDR a 60fps. L&apos;interfaccia sta online, il motore gira sul Mac
-                con yt-dlp e ffmpeg.
+                Il riconoscimento dei cibi di Piattino, addestrato da me su circa 36.000 foto. Pesa 4,5 MB,
+                gira sul telefono senza internet e impara dalle tue correzioni.
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
-                <CardLink href={links.ytDownloader}>
-                  Apri il sito <ArrowUpRight className="size-4" aria-hidden="true" />
+                <CardLink href={links.piattino}>
+                  Provalo in Piattino <ArrowUpRight className="size-4" aria-hidden="true" />
                 </CardLink>
-                <CardLink href={links.ytDownloaderRepo}>
+                <CardLink href={links.piattinoRepo}>
                   <GithubIcon className="size-4" /> Codice
                 </CardLink>
               </div>

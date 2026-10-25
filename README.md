@@ -8,8 +8,8 @@ Il mio portfolio: app, siti e video. Scorri fino in fondo: c'è una sorpresa.
 
 - **Intro** in stile terminale (solo quando apri il sito)
 - **La rivelazione**: una storia che si svela mentre scorri
-- **Capitolo 01 – Piattino**, la mia prima app ([provala](https://gabriele2314.github.io/piattino/) · [codice](https://github.com/Gabriele2314/piattino))
-- **Capitolo 02 – Altri siti**, come [YT Downloader PRO](https://github.com/Gabriele2314/yt-downloader)
+- **Capitolo 01 – Piattino**, la mia prima app, che riconosce 192 cibi da una foto ([provala](https://gabriele2314.github.io/piattino/) · [codice](https://github.com/Gabriele2314/piattino))
+- **Capitolo 02 – Altri progetti**: PiattinoScan, il riconoscimento dei cibi addestrato da me, e questo stesso sito
 - **Capitolo 03 – Video**: editor e manager di [Loris Bike](https://www.youtube.com/@Loris_Bikezz) e [Bike Life Peppe](https://www.youtube.com/@BikeLifePeppe)
 
 Funziona su telefono, tablet e computer, e rispetta l'impostazione «Riduci movimento».

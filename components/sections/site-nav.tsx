@@ -6,7 +6,7 @@ import { links } from "@/lib/site";
 
 const CHAPTERS = [
   { href: "#piattino", n: "01", label: "Piattino" },
-  { href: "#siti", n: "02", label: "Siti" },
+  { href: "#siti", n: "02", label: "Progetti" },
   { href: "#video", n: "03", label: "Video" },
 ];
 
