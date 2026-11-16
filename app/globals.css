@@ -101,6 +101,12 @@
   }
 }
 
+/* Miglioramento progressivo: la classe "js" la mette lo script in <head> */
+html:not(.js) .js-only,
+.js .nojs-only {
+  display: none !important;
+}
+
 /* grana da pellicola sopra tutto il sito */
 .grain::after {
   content: "";

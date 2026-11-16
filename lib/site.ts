@@ -15,4 +15,13 @@ export const links = {
   bikeLifePeppe: "https://www.youtube.com/@BikeLifePeppe",
 } as const;
 
+// Le ancore della pagina, in un posto solo
+export const anchors = {
+  top: "top",
+  story: "segreto",
+  ch1: "piattino",
+  ch2: "siti",
+  ch3: "video",
+} as const;
+
 export const ease = [0.22, 1, 0.36, 1] as const;

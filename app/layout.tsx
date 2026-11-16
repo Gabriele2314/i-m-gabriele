@@ -45,8 +45,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="it"
+      // lo script qui sotto aggiunge la classe "js" prima che React prenda la pagina
+      suppressHydrationWarning
       className={`dark ${archivo.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Con JavaScript attivo la pagina può nascondere le cose da animare; senza, resta tutto visibile */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className="grain min-h-full flex flex-col">{children}</body>
       {/* solo sul sito pubblicato, così le prove sul computer non finiscono nelle statistiche */}
       {process.env.NODE_ENV === "production" && <GoogleAnalytics gaId={site.gaId} />}
