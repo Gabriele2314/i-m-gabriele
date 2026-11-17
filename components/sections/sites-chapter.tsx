@@ -1,4 +1,4 @@
-import { ArrowUpRight, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { GithubIcon } from "@/components/brand-icons";
 import { ChapterLabel, Reveal } from "@/components/reveal";
 import { anchors, links } from "@/lib/site";
@@ -16,7 +16,8 @@ function CardLink({ href, children }: { href: string; children: React.ReactNode 
   );
 }
 
-// sulle 525 foto di prova di Piattino: cibo giusto al primo posto (%)
+// Precisione top-1 (cibo giusto al primo posto, %) sulle stesse 525 foto di prova
+// dell'app, ottobre 2026. «Modelli di Google»: MobileNet v2 + AIY Vision Food V1.
 const SCAN_BARS = [
   { label: "PiattinoScan", value: 59.4, main: true },
   { label: "Modelli di Google", value: 20, main: false },
@@ -36,11 +37,11 @@ export function SitesChapter() {
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {/* PiattinoScan */}
           <Reveal className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card">
-            <div className="flex h-44 flex-col justify-center gap-4 border-b border-border bg-[radial-gradient(circle_at_30%_20%,rgba(200,255,61,0.14),transparent_60%)] p-6">
+            <figure className="flex min-h-44 flex-col justify-center gap-4 border-b border-border bg-[radial-gradient(circle_at_30%_20%,rgba(200,255,61,0.14),transparent_60%)] p-6">
               <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">
-                Cibo giusto al primo posto
+                Precisione top-1 · 525 foto
               </p>
-              <ul className="space-y-3 font-mono text-xs" aria-label="Confronto di precisione sulle foto di prova">
+              <ul className="space-y-3 font-mono text-xs" aria-label="Precisione top-1 sulle 525 foto di prova dell'app">
                 {SCAN_BARS.map((b) => (
                   <li key={b.label}>
                     <div className="mb-1 flex justify-between">
@@ -56,10 +57,15 @@ export function SitesChapter() {
                   </li>
                 ))}
               </ul>
-            </div>
+              <figcaption className="text-xs leading-relaxed text-muted-foreground">
+                Quante volte il cibo giusto è il primo suggerimento, sulle stesse 525 foto di prova
+                dell&apos;app (ottobre 2026). «Modelli di Google»: MobileNet v2 e AIY Vision Food
+                V1, la riserva usata prima di PiattinoScan.
+              </figcaption>
+            </figure>
             <div className="flex flex-1 flex-col gap-3 p-6">
               <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">
-                Intelligenza artificiale
+                N° 002 · Intelligenza artificiale
               </p>
               <h3 className="font-heading text-2xl font-medium">PiattinoScan</h3>
               <p className="flex-1 text-muted-foreground">
@@ -67,11 +73,8 @@ export function SitesChapter() {
                 gira sul telefono senza internet e impara dalle tue correzioni.
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
-                <CardLink href={links.piattino}>
-                  Provalo in Piattino <ArrowUpRight className="size-4" aria-hidden="true" />
-                </CardLink>
                 <CardLink href={links.piattinoRepo}>
-                  <GithubIcon className="size-4" /> Codice
+                  <GithubIcon className="size-4" /> Codice di Piattino
                 </CardLink>
               </div>
             </div>
@@ -93,7 +96,7 @@ export function SitesChapter() {
               </p>
             </div>
             <div className="flex flex-1 flex-col gap-3 p-6">
-              <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">Portfolio</p>
+              <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">N° 003 · Portfolio</p>
               <h3 className="font-heading text-2xl font-medium">Questo sito</h3>
               <p className="flex-1 text-muted-foreground">
                 Next.js, Tailwind, shadcn e animazioni allo scroll. Sì: anche la pagina che stai
@@ -101,7 +104,7 @@ export function SitesChapter() {
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
                 <CardLink href={links.thisRepo}>
-                  <GithubIcon className="size-4" /> Codice
+                  <GithubIcon className="size-4" /> Codice del sito
                 </CardLink>
               </div>
             </div>
@@ -126,7 +129,7 @@ export function SitesChapter() {
                 Non posso dirti niente. <span className="text-foreground">Per ora.</span>
               </p>
               <p className="mt-2 inline-flex min-h-11 items-center font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">
-                In arrivo<span className="animate-blink">_</span>
+                Prossimamente<span className="animate-blink" aria-hidden="true">_</span>
               </p>
             </div>
           </Reveal>

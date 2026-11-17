@@ -37,8 +37,8 @@ const FEATURES = [
   },
   {
     icon: WifiOff,
-    title: "Niente account, niente server",
-    text: "Funziona anche offline e i dati restano sul tuo telefono. Pensata dai 9 anni in su.",
+    title: "Niente account, i dati restano a te",
+    text: "Si apre da un indirizzo web, ma diario e foto restano sul tuo telefono: nessun account e nessun server che li conserva. Dopo il primo avvio funziona anche offline.",
   },
 ];
 
@@ -86,7 +86,7 @@ function PiattinoScreen() {
             className="rounded-[1.1rem]"
           />
           <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">
-            Web app · iPhone · Offline
+            N° 001 · Web app · iPhone
           </p>
           <p className="bg-gradient-to-r from-orange-400 via-amber-300 to-green-400 bg-clip-text font-heading text-5xl font-bold tracking-tight text-transparent lg:text-7xl">
             Piattino
@@ -96,7 +96,7 @@ function PiattinoScreen() {
             dentro.
           </p>
           <ul className="flex flex-wrap gap-2 text-sm">
-            {["192 cibi", "Senza internet", "Dai 9 anni"].map((chip) => (
+            {["192 cibi", "Anche offline", "Età minima 9 anni"].map((chip) => (
               <li
                 key={chip}
                 className="rounded-full border border-white/15 px-3 py-1 text-zinc-200"
@@ -184,9 +184,10 @@ export function PiattinoChapter() {
                 <span className="text-signal">Provala.</span>
               </p>
               <p className="mt-3 max-w-xl text-muted-foreground">
-                Si installa sulla schermata Home dell&apos;iPhone in un minuto.
-                Al primo avvio ti chiede una parola d&apos;ordine: chiedila a
-                me.
+                Si apre dal browser e si aggiunge alla schermata Home
+                dell&apos;iPhone in un minuto: niente App Store, niente account.
+                È pensata per chi ha almeno 9 anni (l&apos;app lo chiede al primo
+                avvio).
               </p>
             </div>
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
