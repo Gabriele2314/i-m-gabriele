@@ -88,7 +88,7 @@ function AgeRevealScroll() {
 
           <motion.ol
             className="space-y-5 md:space-y-8 [@media(max-height:560px)]:space-y-3"
-            animate={{ opacity: revealed ? 0 : 1, filter: revealed ? "blur(14px)" : "blur(0px)" }}
+            animate={{ opacity: revealed ? 0 : 1, scale: revealed ? 0.96 : 1 }}
             transition={{ duration: 0.5, ease }}
           >
             {LINES.map((line, i) => (
@@ -129,8 +129,8 @@ function AgeRevealScroll() {
               <div className="flex items-end gap-3 md:gap-6">
                 <motion.span
                   className="font-heading text-[62vw] leading-[0.8] font-bold tracking-[-0.08em] text-signal md:text-[26rem] [@media(max-height:560px)]:text-[52vh]"
-                  initial={{ opacity: 0, scale: 0.6, filter: "blur(24px)" }}
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.9, ease, delay: 0.15 }}
                 >
                   {AGE}

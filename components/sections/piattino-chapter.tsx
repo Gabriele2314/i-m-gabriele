@@ -15,9 +15,10 @@ import { ChapterLabel, Reveal } from "@/components/reveal";
 import { anchors, links } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 import { cn } from "@/lib/utils";
-import benvenuto from "@/assets/piattino-benvenuto.jpg";
-import installa from "@/assets/piattino-installa.jpg";
-import icona from "@/assets/piattino-icona.png";
+// immagini già ridimensionate a 2x della misura mostrata (l'export statico non le ottimizza)
+import benvenuto from "@/assets/piattino-benvenuto.webp";
+import installa from "@/assets/piattino-installa.webp";
+import icona from "@/assets/piattino-icona.webp";
 
 const FEATURES = [
   {
@@ -54,7 +55,7 @@ function Phone({
   return (
     <div
       className={cn(
-        "relative aspect-[780/1688] shrink-0 overflow-hidden rounded-[2rem] border-[5px] border-zinc-800 bg-black shadow-2xl shadow-black/60",
+        "relative aspect-[480/1038] shrink-0 overflow-hidden rounded-[2rem] border-[5px] border-zinc-800 bg-black shadow-2xl shadow-black/60",
         className,
       )}
     >
@@ -62,7 +63,7 @@ function Phone({
         src={src}
         alt={alt}
         fill
-        sizes="260px"
+        sizes="240px"
         className="object-cover object-top"
       />
     </div>

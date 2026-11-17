@@ -14,7 +14,7 @@ const CHANNELS = [
     name: "Loris Bike",
     href: links.lorisBike,
     image:
-      "https://images.unsplash.com/photo-1511994298241-608e28f14fde?auto=format&fit=crop&w=1200&q=70",
+      "https://images.unsplash.com/photo-1511994298241-608e28f14fde?auto=format&fit=crop&w=800&q=60",
     alt: "Bici da viaggio carica di borse al tramonto in montagna",
   },
   {
@@ -22,7 +22,7 @@ const CHANNELS = [
     name: "Bike Life Peppe",
     href: links.bikeLifePeppe,
     image:
-      "https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?auto=format&fit=crop&w=1200&q=70",
+      "https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?auto=format&fit=crop&w=800&q=60",
     alt: "Bici da corsa appoggiata a una parete di legno arancione",
   },
 ];
@@ -97,7 +97,7 @@ export function VideoChapter() {
                   alt={c.alt}
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover opacity-70 transition duration-700 group-hover:scale-105 group-hover:opacity-90"
+                  className="object-cover opacity-70 transition-[opacity,transform] duration-700 group-hover:scale-105 group-hover:opacity-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                 {/* velatura in alto: le etichette restano leggibili anche sulle foto chiare */}
@@ -143,8 +143,11 @@ export function VideoChapter() {
               </div>
             ))}
             <div className="pointer-events-none absolute inset-y-2 right-4 left-[3.25rem]">
-              <motion.div className="absolute inset-y-0 w-0.5 bg-foreground" style={{ left: playhead }}>
-                <span className="absolute -top-1 -left-[5px] size-3 rotate-45 rounded-[2px] bg-foreground" />
+              {/* si sposta con transform (x in % della traccia), non con left */}
+              <motion.div className="absolute inset-0" style={{ x: playhead }}>
+                <div className="absolute inset-y-0 left-0 w-0.5 bg-foreground">
+                  <span className="absolute -top-1 -left-[5px] size-3 rotate-45 rounded-[2px] bg-foreground" />
+                </div>
               </motion.div>
             </div>
           </div>

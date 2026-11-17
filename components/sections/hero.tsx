@@ -49,7 +49,7 @@ export function Hero() {
           <ShimmerText
             duration={2.2}
             delay={1.2}
-            className="font-heading text-[clamp(4rem,19vw,15rem)] leading-[0.85] font-bold tracking-[-0.05em] text-foreground dark:[--shimmer-contrast:var(--signal)]"
+            className="font-heading text-[clamp(4rem,19vw,15rem)] leading-[0.85] font-bold tracking-[-0.05em] text-foreground"
           >
             I&apos;m <br className="md:hidden" />
             Gabriele

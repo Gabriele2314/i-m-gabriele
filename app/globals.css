@@ -130,17 +130,52 @@ html:not(.js) .js-only,
   background-size: 64px 64px;
 }
 
-/* barre "censurate" del progetto segreto */
+/* barre "censurate" del progetto segreto: il riflesso scorre con transform */
 .redacted {
-  background: linear-gradient(90deg, #26262e 0%, #34343e 50%, #26262e 100%);
-  background-size: 200% 100%;
+  position: relative;
+  overflow: hidden;
+  background: #26262e;
+}
+.redacted::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, #34343e, transparent);
+  transform: translateX(-100%);
   animation: redacted 2.4s linear infinite;
 }
 @keyframes redacted {
   to {
-    background-position: -200% 0;
+    transform: translateX(100%);
   }
 }
+
+/* riflesso del titolo «I'm Gabriele» (vedi components/ui/shimmer-text.tsx) */
+.shimmer-layer {
+  -webkit-mask-image: linear-gradient(90deg, transparent 38%, #000 50%, transparent 62%);
+  mask-image: linear-gradient(90deg, transparent 38%, #000 50%, transparent 62%);
+  transform: translateX(-70%);
+}
+.shimmer-copy {
+  transform: translateX(70%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shimmer-layer {
+    animation: shimmer-layer var(--shimmer-cycle, 3.7s) linear var(--shimmer-delay, 1.2s) infinite;
+  }
+  .shimmer-copy {
+    animation: shimmer-copy var(--shimmer-cycle, 3.7s) linear var(--shimmer-delay, 1.2s) infinite;
+  }
+}
+@keyframes shimmer-layer {
+  0% { transform: translateX(-70%); }
+  60%, 100% { transform: translateX(70%); }
+}
+@keyframes shimmer-copy {
+  0% { transform: translateX(70%); }
+  60%, 100% { transform: translateX(-70%); }
+}
+
 
 @keyframes blink {
   50% {
