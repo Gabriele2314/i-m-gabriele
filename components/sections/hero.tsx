@@ -3,7 +3,7 @@
 import { ArrowDown } from "lucide-react";
 import { ShimmerText } from "@/components/ui/shimmer-text";
 import { useIntro } from "@/components/providers";
-import { anchors } from "@/lib/site";
+import { AGE, anchors } from "@/lib/site";
 
 const ROLES = ["Sviluppo app", "Creo siti", "Monto video", "Gestisco canali YouTube"];
 
@@ -71,14 +71,16 @@ export function Hero() {
           </ul>
 
           <div style={rise(3)} className="hero-rise md:text-right">
-            <p className="text-xl text-muted-foreground md:text-2xl">
-              Ma c&apos;è una cosa che non ti ho ancora detto<span className="text-signal">…</span>
-            </p>
+            {AGE !== null && (
+              <p className="text-xl text-muted-foreground md:text-2xl">
+                Ma c&apos;è una cosa che non ti ho ancora detto<span className="text-signal">…</span>
+              </p>
+            )}
             <a
-              href={`#${anchors.story}`}
+              href={`#${AGE !== null ? anchors.story : anchors.ch1}`}
               className="group mt-5 inline-flex min-h-11 items-center gap-3 font-mono text-xs tracking-[0.2em] uppercase"
             >
-              Scorri per scoprirlo
+              {AGE !== null ? "Scorri per scoprirlo" : "Scorri per vedere cosa faccio"}
               <span className="flex size-10 items-center justify-center rounded-full border border-border transition-colors group-hover:border-signal group-hover:text-signal">
                 <ArrowDown className="size-4 motion-safe:animate-bounce" aria-hidden="true" />
               </span>

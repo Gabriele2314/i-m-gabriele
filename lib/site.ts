@@ -1,3 +1,10 @@
+/**
+ * L'età compare SOLO qui. Per toglierla dal sito metti `null`:
+ * spariscono la sezione della storia e la frase dell'hero che la annuncia,
+ * e il pulsante dell'hero porta al capitolo 01.
+ */
+export const AGE: number | null = 12;
+
 export const site = {
   url: "https://i-m-gabriele.vercel.app",
   gaId: "G-BX8V25EZNX", // Google Analytics

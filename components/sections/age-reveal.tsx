@@ -8,7 +8,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { anchors, ease } from "@/lib/site";
+import { AGE, anchors, ease } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 
 const LINES = [
@@ -32,6 +32,7 @@ function stepFor(v: number) {
 
 export function AgeReveal() {
   const reduce = usePrefersReducedMotion();
+  if (AGE === null) return null;
 
   return (
     <section id={anchors.story} className="relative" aria-label="Una cosa su di me">
@@ -70,7 +71,7 @@ function AgeRevealScroll() {
     <div ref={ref} className="js-only relative h-[420vh]">
       <h2 className="sr-only">Una cosa su di me</h2>
       <p className="sr-only">
-        {LINES.join(" ")} Ho 12 anni, e ho appena iniziato.
+        {LINES.join(" ")} Ho {AGE} anni, e ho appena iniziato.
       </p>
 
       <div className="sticky top-0 flex h-dvh items-center overflow-hidden px-4 md:px-10" aria-hidden="true">
@@ -132,7 +133,7 @@ function AgeRevealScroll() {
                   animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                   transition={{ duration: 0.9, ease, delay: 0.15 }}
                 >
-                  12
+                  {AGE}
                 </motion.span>
                 <motion.span
                   className="pb-[0.2em] font-heading text-4xl font-bold tracking-tight md:text-8xl [@media(max-height:560px)]:text-5xl"
@@ -181,7 +182,7 @@ function AgeRevealStatic() {
           ))}
         </ol>
         <p className="mt-16 flex items-end gap-4 font-heading font-bold">
-          <span className="text-[10rem] leading-[0.8] tracking-[-0.08em] text-signal md:text-[18rem]">12</span>
+          <span className="text-[10rem] leading-[0.8] tracking-[-0.08em] text-signal md:text-[18rem]">{AGE}</span>
           <span className="pb-4 text-5xl md:text-7xl">anni.</span>
         </p>
         <p className="mt-6 font-mono text-sm tracking-[0.2em] text-muted-foreground uppercase">
