@@ -17,11 +17,11 @@ export const links = {
 
 // Le ancore della pagina, in un posto solo
 export const anchors = {
-  top: "top",
-  story: "segreto",
-  ch1: "piattino",
-  ch2: "siti",
-  ch3: "video",
+  top: "inizio",
+  story: "storia",
+  ch1: "capitolo-01",
+  ch2: "capitolo-02",
+  ch3: "capitolo-03",
 } as const;
 
 export const ease = [0.22, 1, 0.36, 1] as const;

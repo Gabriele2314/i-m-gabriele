@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Clapperboard } from "lucide-react";
 import { YoutubeIcon } from "@/components/brand-icons";
 import { ChapterLabel, Reveal } from "@/components/reveal";
-import { links } from "@/lib/site";
+import { anchors, links } from "@/lib/site";
 
 const CHANNELS = [
   {
@@ -50,7 +50,7 @@ export function VideoChapter() {
   );
 
   return (
-    <section id="video" ref={ref} className="relative scroll-mt-14 px-4 py-20 md:px-10 md:py-32">
+    <section id={anchors.ch3} ref={ref} className="relative scroll-mt-14 px-4 py-20 md:px-10 md:py-32">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <ChapterLabel number="03">Dietro le quinte</ChapterLabel>

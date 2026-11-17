@@ -1,8 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ease } from "@/lib/site";
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
+/*
+  Il contenuto è visibile di partenza (anche senza JavaScript o con «Riduci movimento»).
+  Solo con JavaScript attivo il CSS lo nasconde finché non entra nello schermo,
+  poi lo fa salire con opacity + transform (vedi .reveal in globals.css).
+*/
 export function Reveal({
   children,
   className,
@@ -12,16 +17,40 @@ export function Reveal({
   className?: string;
   delay?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState<false | "instant" | "anim">(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let first = true;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Scorrendo normalmente un blocco entra dal basso e sale con l'animazione.
+          // Se invece compare già in alto (refresh a metà, ancora, tasto Fine, salto)
+          // si mostra subito: niente schermo vuoto ad aspettare.
+          const jumped = first || entry.boundingClientRect.top < window.innerHeight * 0.7;
+          setShown(jumped ? "instant" : "anim");
+          io.disconnect();
+        }
+        first = false;
+      },
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.8, delay, ease }}
+    <div
+      ref={ref}
+      className={cn("reveal", className)}
+      data-shown={shown || undefined}
+      style={delay ? ({ "--reveal-delay": `${delay}s` } as React.CSSProperties) : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 

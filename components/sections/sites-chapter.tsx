@@ -1,7 +1,7 @@
 import { ArrowUpRight, Lock } from "lucide-react";
 import { GithubIcon } from "@/components/brand-icons";
 import { ChapterLabel, Reveal } from "@/components/reveal";
-import { links } from "@/lib/site";
+import { anchors, links } from "@/lib/site";
 
 function CardLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
@@ -24,7 +24,7 @@ const SCAN_BARS = [
 
 export function SitesChapter() {
   return (
-    <section id="siti" className="relative scroll-mt-14 px-4 py-20 md:px-10 md:py-32">
+    <section id={anchors.ch2} className="relative scroll-mt-14 px-4 py-20 md:px-10 md:py-32">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <ChapterLabel number="02">Non mi sono fermato</ChapterLabel>

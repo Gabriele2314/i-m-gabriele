@@ -12,7 +12,7 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { buttonVariants } from "@/components/ui/button";
 import { GithubIcon } from "@/components/brand-icons";
 import { ChapterLabel, Reveal } from "@/components/reveal";
-import { links } from "@/lib/site";
+import { anchors, links } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 import { cn } from "@/lib/utils";
 import benvenuto from "@/assets/piattino-benvenuto.jpg";
@@ -141,7 +141,8 @@ export function PiattinoChapter() {
 
   return (
     <section
-      id="piattino"
+      id={anchors.ch1}
+      tabIndex={-1}
       className="relative -mt-24 scroll-mt-14 overflow-hidden md:-mt-48"
     >
       {reduce ? (

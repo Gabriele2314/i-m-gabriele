@@ -20,6 +20,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const HEAD_SCRIPT = `(function(){var c=document.documentElement.classList;c.add('js');try{if(sessionStorage.getItem('intro-vista')==='1'||location.hash.length>1||matchMedia('(prefers-reduced-motion: reduce)').matches)c.add('intro-skip')}catch(e){}})()`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: "I'm Gabriele",
@@ -50,8 +52,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`dark ${archivo.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        {/* Con JavaScript attivo la pagina può nascondere le cose da animare; senza, resta tutto visibile */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/*
+          Prima del primo paint: con JavaScript la pagina può nascondere le cose da animare
+          (senza, resta tutto visibile) e l'intro non copre lo schermo a chi l'ha già vista,
+          arriva da un link a un capitolo o preferisce meno animazioni.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: HEAD_SCRIPT }} />
       </head>
       <body className="grain min-h-full flex flex-col">{children}</body>
       {/* solo sul sito pubblicato, così le prove sul computer non finiscono nelle statistiche */}

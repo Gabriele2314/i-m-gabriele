@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useIntro } from "@/components/providers";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
+import { anchors } from "@/lib/site";
 
 const LINES = [
   { text: "> avvio del sistema…", tag: "" },
@@ -22,13 +23,24 @@ export function BootIntro() {
   const [visible, setVisible] = useState(true);
   const [shown, setShown] = useState(0);
 
+  const played = useRef(false);
+  const jumpToChapter = useRef(false);
+
   const close = useCallback(() => {
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {}
     setVisible(false);
-    finish();
+    finish(played.current);
+    // da qui in poi il refresh torna a ricordare la posizione
+    if (played.current) history.scrollRestoration = "auto";
   }, [finish]);
+
+  // «Salta intro»: si salta anche la storia e si parte dal capitolo 01
+  const skip = useCallback(() => {
+    jumpToChapter.current = true;
+    close();
+  }, [close]);
 
   useEffect(() => {
     let seen = false;
@@ -36,13 +48,15 @@ export function BootIntro() {
       seen = sessionStorage.getItem(STORAGE_KEY) === "1";
     } catch {}
 
-    // Chi ha già visto l'intro (o preferisce meno animazioni) entra subito
-    if (reduce || seen) {
+    // Chi ha già visto l'intro, preferisce meno animazioni o arriva da un link
+    // a un capitolo (#capitolo-02…) entra subito, senza perdere la posizione
+    if (reduce || seen || location.hash.length > 1) {
       const id = requestAnimationFrame(close);
       return () => cancelAnimationFrame(id);
     }
 
     // La storia parte sempre dall'inizio
+    played.current = true;
     history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
 
@@ -50,6 +64,17 @@ export function BootIntro() {
     timers.push(setTimeout(close, 200 + LINES.length * STEP_MS + 500));
     return () => timers.forEach(clearTimeout);
   }, [reduce, close]);
+
+  // dopo «Salta intro», appena la pagina torna scorrevole: capitolo 01 e focus lì
+  useEffect(() => {
+    if (visible || !jumpToChapter.current) return;
+    jumpToChapter.current = false;
+    const target = document.getElementById(anchors.ch1);
+    if (!target) return;
+    history.replaceState(null, "", `#${anchors.ch1}`);
+    target.scrollIntoView({ block: "start", behavior: "instant" });
+    target.focus({ preventScroll: true });
+  }, [visible]);
 
   useEffect(() => {
     if (!visible) return;
@@ -110,7 +135,7 @@ export function BootIntro() {
             </div>
             <button
               type="button"
-              onClick={close}
+              onClick={skip}
               className="min-h-11 cursor-pointer rounded-full border border-border px-4 text-xs tracking-[0.2em] text-muted-foreground uppercase transition-colors hover:border-signal hover:text-signal"
             >
               Salta intro

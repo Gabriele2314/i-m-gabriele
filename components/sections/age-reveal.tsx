@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -8,7 +8,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { ease } from "@/lib/site";
+import { anchors, ease } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 
 const LINES = [
@@ -22,26 +22,52 @@ const LINES = [
 const THRESHOLDS = [0, 0.15, 0.3, 0.45, 0.62];
 const TOTAL = THRESHOLDS.length;
 
+function stepFor(v: number) {
+  let next = 0;
+  THRESHOLDS.forEach((t, i) => {
+    if (v >= t) next = i;
+  });
+  return next;
+}
+
 export function AgeReveal() {
   const reduce = usePrefersReducedMotion();
-  const ref = useRef<HTMLElement>(null);
+
+  return (
+    <section id={anchors.story} className="relative" aria-label="Una cosa su di me">
+      {reduce ? (
+        <AgeRevealStatic />
+      ) : (
+        <>
+          {/* con JavaScript: la storia allo scroll */}
+          <AgeRevealScroll />
+          {/* senza JavaScript: stesso testo, fermo e leggibile */}
+          <div className="nojs-only">
+            <AgeRevealStatic />
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
+
+function AgeRevealScroll() {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const [step, setStep] = useState(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    let next = 0;
-    THRESHOLDS.forEach((t, i) => {
-      if (v >= t) next = i;
-    });
-    setStep(next);
-  });
+  useMotionValueEvent(scrollYProgress, "change", (v) => setStep(stepFor(v)));
 
-  if (reduce) return <AgeRevealStatic />;
+  // arrivo a metà sezione (refresh, ancora, tastiera): si parte dal passo giusto
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setStep(stepFor(scrollYProgress.get())));
+    return () => cancelAnimationFrame(id);
+  }, [scrollYProgress]);
 
   const revealed = step === TOTAL - 1;
 
   return (
-    <section id="segreto" ref={ref} className="relative h-[420vh]" aria-label="Una cosa su di me">
+    <div ref={ref} className="js-only relative h-[420vh]">
       <p className="sr-only">
         {LINES.join(" ")} Ho 12 anni, e ho appena iniziato.
       </p>
@@ -135,14 +161,14 @@ export function AgeReveal() {
           <ChevronDown className="size-4 motion-safe:animate-bounce" />
         </motion.p>
       </div>
-    </section>
+    </div>
   );
 }
 
-/* Versione senza animazioni per chi le ha disattivate nel sistema */
+/* Versione ferma: per chi ha disattivato le animazioni o non ha JavaScript */
 function AgeRevealStatic() {
   return (
-    <section id="segreto" className="px-4 py-32 md:px-10">
+    <div className="px-4 py-32 md:px-10">
       <div className="mx-auto max-w-6xl">
         <ol className="space-y-6">
           {LINES.map((line) => (
@@ -159,6 +185,6 @@ function AgeRevealStatic() {
           — e ho appena iniziato.
         </p>
       </div>
-    </section>
+    </div>
   );
 }

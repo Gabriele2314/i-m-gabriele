@@ -1,29 +1,21 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { ShimmerText } from "@/components/ui/shimmer-text";
 import { useIntro } from "@/components/providers";
-import { ease } from "@/lib/site";
+import { anchors } from "@/lib/site";
 
 const ROLES = ["Sviluppo app", "Creo siti", "Monto video", "Gestisco canali YouTube"];
 
-const container: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
-};
-
-const rise: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.9, ease } },
-};
+// ritardo di ogni blocco quando l'hero entra (dopo l'intro)
+const rise = (i: number) => ({ "--rise-delay": `${0.15 + i * 0.12}s` }) as React.CSSProperties;
 
 export function Hero() {
-  const { done } = useIntro();
+  const { done, played } = useIntro();
 
   return (
     <section
-      id="top"
+      id={anchors.top}
       className="relative isolate flex min-h-dvh flex-col justify-end overflow-hidden px-4 pt-24 pb-10 md:px-10 md:pb-14"
     >
       {/* sfondo: griglia che svanisce + bagliore */}
@@ -36,25 +28,24 @@ export function Hero() {
         className="absolute -top-40 -left-40 -z-10 size-[42rem] rounded-full bg-signal/10 blur-[120px]"
       />
 
-      <motion.div
-        className="mx-auto w-full max-w-7xl"
-        variants={container}
-        initial="hidden"
-        animate={done ? "show" : "hidden"}
-      >
-        <motion.div
-          variants={rise}
-          className="mb-6 flex items-center justify-between font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase md:mb-10"
+      {/*
+        L'hero è visibile da subito (anche senza JavaScript): sta sotto l'intro.
+        Solo quando l'intro è stata davvero mostrata, alla sua uscita i blocchi salgono.
+      */}
+      <div className="mx-auto w-full max-w-7xl" data-rise={done && played ? "play" : undefined}>
+        <div
+          style={rise(0)}
+          className="hero-rise mb-6 flex items-center justify-between font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase md:mb-10"
         >
           <span>File n° 001 · Portfolio</span>
           <span className="flex items-center gap-2">
             <span className="size-2 animate-blink rounded-full bg-rec" aria-hidden="true" />
             Rec
           </span>
-        </motion.div>
+        </div>
 
         <h1 className="sr-only">I&apos;m Gabriele</h1>
-        <motion.div variants={rise} aria-hidden="true">
+        <div style={rise(1)} className="hero-rise" aria-hidden="true">
           <ShimmerText
             duration={2.2}
             delay={1.2}
@@ -63,10 +54,10 @@ export function Hero() {
             I&apos;m <br className="md:hidden" />
             Gabriele
           </ShimmerText>
-        </motion.div>
+        </div>
 
         <div className="mt-10 grid gap-10 border-t border-border pt-8 md:mt-14 md:grid-cols-2 md:items-end">
-          <motion.ul variants={rise} className="flex flex-wrap gap-x-3 gap-y-2 text-lg md:text-xl">
+          <ul style={rise(2)} className="hero-rise flex flex-wrap gap-x-3 gap-y-2 text-lg md:text-xl">
             {ROLES.map((role, i) => (
               <li key={role} className="flex items-center gap-3">
                 {role}
@@ -77,14 +68,14 @@ export function Hero() {
                 )}
               </li>
             ))}
-          </motion.ul>
+          </ul>
 
-          <motion.div variants={rise} className="md:text-right">
+          <div style={rise(3)} className="hero-rise md:text-right">
             <p className="text-xl text-muted-foreground md:text-2xl">
               Ma c&apos;è una cosa che non ti ho ancora detto<span className="text-signal">…</span>
             </p>
             <a
-              href="#segreto"
+              href={`#${anchors.story}`}
               className="group mt-5 inline-flex min-h-11 items-center gap-3 font-mono text-xs tracking-[0.2em] uppercase"
             >
               Scorri per scoprirlo
@@ -92,9 +83,9 @@ export function Hero() {
                 <ArrowDown className="size-4 motion-safe:animate-bounce" aria-hidden="true" />
               </span>
             </a>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

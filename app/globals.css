@@ -74,6 +74,9 @@
   }
   html {
     @apply font-sans;
+  }
+  /* scorrimento morbido solo per i clic sui link: l'arrivo da un'ancora o il refresh saltano subito */
+  html.hydrated {
     scroll-behavior: smooth;
   }
   body {
@@ -90,7 +93,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html,
+  html.hydrated {
     scroll-behavior: auto;
   }
   *,
@@ -145,6 +149,58 @@ html:not(.js) .js-only,
 }
 .animate-blink {
   animation: blink 1.1s steps(1) infinite;
+}
+
+/*
+  Animazioni d'entrata come miglioramento progressivo.
+  Stato di partenza: tutto visibile. Si nasconde solo con JavaScript attivo
+  e senza «Riduci movimento»; si anima solo opacity e transform.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+  }
+  .js .reveal:not([data-shown]) {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .js .reveal[data-shown="instant"] {
+    transition: none;
+  }
+  /* paracadute: se React non parte entro 4 secondi, si mostra tutto */
+  .js:not(.hydrated) .reveal:not([data-shown]) {
+    animation: reveal-failsafe 0s linear 4s forwards;
+  }
+
+  /* l'hero sale quando l'intro esce (data-rise="play") */
+  [data-rise="play"] .hero-rise {
+    animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--rise-delay, 0s) both;
+  }
+}
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+/* i capitoli ricevono il focus da «Salta intro»: niente riquadro sul contenitore */
+section[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* Senza JavaScript, o quando va saltata, l'intro non copre la pagina neanche per un attimo */
+html:not(.js) .boot-intro,
+.intro-skip .boot-intro {
+  display: none;
 }
 
 /* Paracadute: se il JavaScript non parte, l'intro sparisce comunque */
