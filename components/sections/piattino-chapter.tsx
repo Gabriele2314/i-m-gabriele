@@ -12,12 +12,13 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { buttonVariants } from "@/components/ui/button";
 import { GithubIcon } from "@/components/brand-icons";
 import { ChapterLabel, Reveal } from "@/components/reveal";
-import { links } from "@/lib/site";
+import { anchors, links } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 import { cn } from "@/lib/utils";
-import benvenuto from "@/assets/piattino-benvenuto.jpg";
-import installa from "@/assets/piattino-installa.jpg";
-import icona from "@/assets/piattino-icona.png";
+// immagini già ridimensionate a 2x della misura mostrata (l'export statico non le ottimizza)
+import benvenuto from "@/assets/piattino-benvenuto.webp";
+import installa from "@/assets/piattino-installa.webp";
+import icona from "@/assets/piattino-icona.webp";
 
 const FEATURES = [
   {
@@ -37,8 +38,8 @@ const FEATURES = [
   },
   {
     icon: WifiOff,
-    title: "Niente account, niente server",
-    text: "Funziona anche offline e i dati restano sul tuo telefono. Pensata dai 9 anni in su.",
+    title: "Niente account, i dati restano a te",
+    text: "Si apre da un indirizzo web, ma diario e foto restano sul tuo telefono: nessun account e nessun server che li conserva. Dopo il primo avvio funziona anche offline.",
   },
 ];
 
@@ -54,7 +55,7 @@ function Phone({
   return (
     <div
       className={cn(
-        "relative aspect-[780/1688] shrink-0 overflow-hidden rounded-[2rem] border-[5px] border-zinc-800 bg-black shadow-2xl shadow-black/60",
+        "relative aspect-[480/1038] shrink-0 overflow-hidden rounded-[2rem] border-[5px] border-zinc-800 bg-black shadow-2xl shadow-black/60",
         className,
       )}
     >
@@ -62,7 +63,7 @@ function Phone({
         src={src}
         alt={alt}
         fill
-        sizes="260px"
+        sizes="240px"
         className="object-cover object-top"
       />
     </div>
@@ -86,7 +87,7 @@ function PiattinoScreen() {
             className="rounded-[1.1rem]"
           />
           <p className="font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">
-            Web app · iPhone · Offline
+            N° 001 · Web app · iPhone
           </p>
           <p className="bg-gradient-to-r from-orange-400 via-amber-300 to-green-400 bg-clip-text font-heading text-5xl font-bold tracking-tight text-transparent lg:text-7xl">
             Piattino
@@ -96,7 +97,7 @@ function PiattinoScreen() {
             dentro.
           </p>
           <ul className="flex flex-wrap gap-2 text-sm">
-            {["192 cibi", "Senza internet", "Dai 9 anni"].map((chip) => (
+            {["192 cibi", "Anche offline", "Età minima 9 anni"].map((chip) => (
               <li
                 key={chip}
                 className="rounded-full border border-white/15 px-3 py-1 text-zinc-200"
@@ -110,7 +111,7 @@ function PiattinoScreen() {
         <div className="flex h-full items-center justify-center gap-4 md:gap-6">
           <Phone
             src={benvenuto}
-            alt="Schermata di benvenuto di Piattino con il cubo di frutta in 3D"
+            alt="Primo avvio di Piattino: nome, data di nascita, altezza, peso, quanto ti muovi e obiettivo"
             className="h-[25rem] md:h-[30rem]"
           />
           <Phone
@@ -141,7 +142,8 @@ export function PiattinoChapter() {
 
   return (
     <section
-      id="piattino"
+      id={anchors.ch1}
+      tabIndex={-1}
       className="relative -mt-24 scroll-mt-14 overflow-hidden md:-mt-48"
     >
       {reduce ? (
@@ -183,9 +185,10 @@ export function PiattinoChapter() {
                 <span className="text-signal">Provala.</span>
               </p>
               <p className="mt-3 max-w-xl text-muted-foreground">
-                Si installa sulla schermata Home dell&apos;iPhone in un minuto.
-                Al primo avvio ti chiede una parola d&apos;ordine: chiedila a
-                me.
+                Si apre dal browser e si aggiunge alla schermata Home
+                dell&apos;iPhone in un minuto: niente App Store, niente account.
+                È pensata per chi ha almeno 9 anni (l&apos;app lo chiede al primo
+                avvio).
               </p>
             </div>
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row">

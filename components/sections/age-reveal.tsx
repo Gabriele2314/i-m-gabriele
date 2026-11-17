@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -8,7 +8,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { ease } from "@/lib/site";
+import { AGE, anchors, ease } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 
 const LINES = [
@@ -22,28 +22,56 @@ const LINES = [
 const THRESHOLDS = [0, 0.15, 0.3, 0.45, 0.62];
 const TOTAL = THRESHOLDS.length;
 
+function stepFor(v: number) {
+  let next = 0;
+  THRESHOLDS.forEach((t, i) => {
+    if (v >= t) next = i;
+  });
+  return next;
+}
+
 export function AgeReveal() {
   const reduce = usePrefersReducedMotion();
-  const ref = useRef<HTMLElement>(null);
+  if (AGE === null) return null;
+
+  return (
+    <section id={anchors.story} className="relative" aria-label="Una cosa su di me">
+      {reduce ? (
+        <AgeRevealStatic />
+      ) : (
+        <>
+          {/* con JavaScript: la storia allo scroll */}
+          <AgeRevealScroll />
+          {/* senza JavaScript: stesso testo, fermo e leggibile */}
+          <div className="nojs-only">
+            <AgeRevealStatic />
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
+
+function AgeRevealScroll() {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const [step, setStep] = useState(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    let next = 0;
-    THRESHOLDS.forEach((t, i) => {
-      if (v >= t) next = i;
-    });
-    setStep(next);
-  });
+  useMotionValueEvent(scrollYProgress, "change", (v) => setStep(stepFor(v)));
 
-  if (reduce) return <AgeRevealStatic />;
+  // arrivo a metà sezione (refresh, ancora, tastiera): si parte dal passo giusto
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setStep(stepFor(scrollYProgress.get())));
+    return () => cancelAnimationFrame(id);
+  }, [scrollYProgress]);
 
   const revealed = step === TOTAL - 1;
 
   return (
-    <section id="segreto" ref={ref} className="relative h-[420vh]" aria-label="Una cosa su di me">
+    <div ref={ref} className="js-only relative h-[420vh]">
+      <h2 className="sr-only">Una cosa su di me</h2>
       <p className="sr-only">
-        {LINES.join(" ")} Ho 12 anni, e ho appena iniziato.
+        {LINES.join(" ")} Ho {AGE} anni, e ho appena iniziato.
       </p>
 
       <div className="sticky top-0 flex h-dvh items-center overflow-hidden px-4 md:px-10" aria-hidden="true">
@@ -60,7 +88,7 @@ export function AgeReveal() {
 
           <motion.ol
             className="space-y-5 md:space-y-8 [@media(max-height:560px)]:space-y-3"
-            animate={{ opacity: revealed ? 0 : 1, filter: revealed ? "blur(14px)" : "blur(0px)" }}
+            animate={{ opacity: revealed ? 0 : 1, scale: revealed ? 0.96 : 1 }}
             transition={{ duration: 0.5, ease }}
           >
             {LINES.map((line, i) => (
@@ -68,7 +96,8 @@ export function AgeReveal() {
                 key={line}
                 className="font-heading text-[1.65rem] leading-[1.15] font-medium tracking-tight text-balance md:text-5xl [@media(max-height:560px)]:text-2xl"
                 animate={{
-                  opacity: i < step ? 0.22 : i === step ? 1 : 0,
+                  // le righe già lette restano attenuate ma leggibili (contrasto ≈ 4,9:1)
+                  opacity: i < step ? 0.5 : i === step ? 1 : 0,
                   y: i > step ? 28 : 0,
                 }}
                 transition={{ duration: 0.6, ease }}
@@ -100,11 +129,11 @@ export function AgeReveal() {
               <div className="flex items-end gap-3 md:gap-6">
                 <motion.span
                   className="font-heading text-[62vw] leading-[0.8] font-bold tracking-[-0.08em] text-signal md:text-[26rem] [@media(max-height:560px)]:text-[52vh]"
-                  initial={{ opacity: 0, scale: 0.6, filter: "blur(24px)" }}
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.9, ease, delay: 0.15 }}
                 >
-                  12
+                  {AGE}
                 </motion.span>
                 <motion.span
                   className="pb-[0.2em] font-heading text-4xl font-bold tracking-tight md:text-8xl [@media(max-height:560px)]:text-5xl"
@@ -135,15 +164,16 @@ export function AgeReveal() {
           <ChevronDown className="size-4 motion-safe:animate-bounce" />
         </motion.p>
       </div>
-    </section>
+    </div>
   );
 }
 
-/* Versione senza animazioni per chi le ha disattivate nel sistema */
+/* Versione ferma: per chi ha disattivato le animazioni o non ha JavaScript */
 function AgeRevealStatic() {
   return (
-    <section id="segreto" className="px-4 py-32 md:px-10">
+    <div className="px-4 py-32 md:px-10">
       <div className="mx-auto max-w-6xl">
+        <h2 className="sr-only">Una cosa su di me</h2>
         <ol className="space-y-6">
           {LINES.map((line) => (
             <li key={line} className="font-heading text-3xl font-medium tracking-tight md:text-5xl">
@@ -152,13 +182,13 @@ function AgeRevealStatic() {
           ))}
         </ol>
         <p className="mt-16 flex items-end gap-4 font-heading font-bold">
-          <span className="text-[10rem] leading-[0.8] tracking-[-0.08em] text-signal md:text-[18rem]">12</span>
+          <span className="text-[10rem] leading-[0.8] tracking-[-0.08em] text-signal md:text-[18rem]">{AGE}</span>
           <span className="pb-4 text-5xl md:text-7xl">anni.</span>
         </p>
         <p className="mt-6 font-mono text-sm tracking-[0.2em] text-muted-foreground uppercase">
           — e ho appena iniziato.
         </p>
       </div>
-    </section>
+    </div>
   );
 }

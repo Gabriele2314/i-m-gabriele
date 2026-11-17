@@ -1,0 +1,37 @@
+<!doctype html>
+<!--
+  Sorgente di public/og.png (1200x630). Per rigenerarla: apri questo file in Chrome,
+  imposta la finestra a 1200x630 (DevTools → modalità dispositivo) e cattura lo screenshot.
+  Niente età qui: la sorpresa resta nel sito.
+-->
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: "Space Grotesk"; font-weight: 500 700; src: url(fonts/space-grotesk.woff2) format("woff2"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 100 900; src: url(fonts/geist-mono.woff2) format("woff2"); }
+  @font-face { font-family: "Archivo"; font-weight: 100 900; src: url(fonts/archivo.woff2) format("woff2"); }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: #07070a; color: #f4f4f5; }
+  body { position: relative; padding: 56px 72px; display: flex; flex-direction: column; justify-content: space-between; font-family: Archivo, sans-serif; }
+  .top { display: flex; justify-content: space-between; font: 500 20px "Geist Mono", monospace; letter-spacing: .2em; text-transform: uppercase; color: #a1a1aa; }
+  .rec { display: flex; align-items: center; gap: 12px; }
+  .rec i { width: 12px; height: 12px; border-radius: 50%; background: #ff453a; }
+  h1 { font: 700 188px/0.86 "Space Grotesk", sans-serif; letter-spacing: -0.05em; }
+  h1 span { color: #c8ff3d; }
+  .bottom { border-top: 1px solid rgb(255 255 255 / .12); padding-top: 28px; display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
+  .roles { font-size: 30px; display: flex; flex-wrap: wrap; gap: 6px 14px; max-width: 640px; }
+  .roles b { color: #c8ff3d; font-weight: 400; }
+  .hint { font-size: 28px; color: #a1a1aa; text-align: right; max-width: 420px; }
+  .hint b { color: #c8ff3d; font-weight: 400; }
+</style>
+</head>
+<body>
+  <div class="top"><span>File n° 001 · Portfolio</span><span class="rec"><i></i>Rec</span></div>
+  <h1>I'm <span>G</span>abriele</h1>
+  <div class="bottom">
+    <p class="roles">Sviluppo app <b>/</b> Creo siti <b>/</b> Monto video <b>/</b> Gestisco canali YouTube</p>
+    <p class="hint">Ma c'è una cosa che non ti ho ancora detto<b>…</b></p>
+  </div>
+</body>
+</html>

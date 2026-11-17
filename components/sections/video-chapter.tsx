@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Clapperboard } from "lucide-react";
 import { YoutubeIcon } from "@/components/brand-icons";
 import { ChapterLabel, Reveal } from "@/components/reveal";
-import { links } from "@/lib/site";
+import { anchors, links } from "@/lib/site";
 
 const CHANNELS = [
   {
@@ -14,7 +14,7 @@ const CHANNELS = [
     name: "Loris Bike",
     href: links.lorisBike,
     image:
-      "https://images.unsplash.com/photo-1511994298241-608e28f14fde?auto=format&fit=crop&w=1200&q=70",
+      "https://images.unsplash.com/photo-1511994298241-608e28f14fde?auto=format&fit=crop&w=800&q=60",
     alt: "Bici da viaggio carica di borse al tramonto in montagna",
   },
   {
@@ -22,7 +22,7 @@ const CHANNELS = [
     name: "Bike Life Peppe",
     href: links.bikeLifePeppe,
     image:
-      "https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?auto=format&fit=crop&w=1200&q=70",
+      "https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?auto=format&fit=crop&w=800&q=60",
     alt: "Bici da corsa appoggiata a una parete di legno arancione",
   },
 ];
@@ -50,7 +50,7 @@ export function VideoChapter() {
   );
 
   return (
-    <section id="video" ref={ref} className="relative scroll-mt-14 px-4 py-20 md:px-10 md:py-32">
+    <section id={anchors.ch3} ref={ref} className="relative scroll-mt-14 px-4 py-20 md:px-10 md:py-32">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <ChapterLabel number="03">Dietro le quinte</ChapterLabel>
@@ -88,17 +88,21 @@ export function VideoChapter() {
                 href={c.href}
                 target="_blank"
                 rel="noreferrer"
-                className="group relative block aspect-video overflow-hidden bg-card"
+                aria-label={`${c.name}: canale YouTube (si apre in una nuova scheda)`}
+                // il contenitore taglia ciò che sporge: il bordo del focus va disegnato dentro
+                className="group relative block aspect-video overflow-hidden bg-card focus-visible:outline-offset-[-4px]"
               >
                 <Image
                   src={c.image}
                   alt={c.alt}
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover opacity-70 transition duration-700 group-hover:scale-105 group-hover:opacity-90"
+                  className="object-cover opacity-70 transition-[opacity,transform] duration-700 group-hover:scale-105 group-hover:opacity-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4 font-mono text-xs tracking-[0.2em] text-white/80 uppercase">
+                {/* velatura in alto: le etichette restano leggibili anche sulle foto chiare */}
+                <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/75 to-transparent" />
+                <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4 font-mono text-xs tracking-[0.2em] text-white uppercase">
                   <span>Canale {c.n}</span>
                   <span className="flex items-center gap-2">
                     <span className="size-2 animate-blink rounded-full bg-rec" aria-hidden="true" />
@@ -110,7 +114,7 @@ export function VideoChapter() {
                     <p className="font-heading text-3xl font-bold tracking-tight text-white md:text-2xl lg:text-4xl">
                       {c.name}
                     </p>
-                    <p className="mt-1 text-sm text-white/75">Video editor · Channel manager</p>
+                    <p className="mt-1 text-sm text-white/90">Video editor · Channel manager</p>
                   </div>
                   <span className="flex shrink-0 items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-black transition-transform group-hover:-translate-y-0.5">
                     <YoutubeIcon className="size-4 text-[#ff0000]" />
@@ -139,8 +143,11 @@ export function VideoChapter() {
               </div>
             ))}
             <div className="pointer-events-none absolute inset-y-2 right-4 left-[3.25rem]">
-              <motion.div className="absolute inset-y-0 w-0.5 bg-foreground" style={{ left: playhead }}>
-                <span className="absolute -top-1 -left-[5px] size-3 rotate-45 rounded-[2px] bg-foreground" />
+              {/* si sposta con transform (x in % della traccia), non con left */}
+              <motion.div className="absolute inset-0" style={{ x: playhead }}>
+                <div className="absolute inset-y-0 left-0 w-0.5 bg-foreground">
+                  <span className="absolute -top-1 -left-[5px] size-3 rotate-45 rounded-[2px] bg-foreground" />
+                </div>
               </motion.div>
             </div>
           </div>
