@@ -68,6 +68,7 @@ function AgeRevealScroll() {
 
   return (
     <div ref={ref} className="js-only relative h-[420vh]">
+      <h2 className="sr-only">Una cosa su di me</h2>
       <p className="sr-only">
         {LINES.join(" ")} Ho 12 anni, e ho appena iniziato.
       </p>
@@ -94,7 +95,8 @@ function AgeRevealScroll() {
                 key={line}
                 className="font-heading text-[1.65rem] leading-[1.15] font-medium tracking-tight text-balance md:text-5xl [@media(max-height:560px)]:text-2xl"
                 animate={{
-                  opacity: i < step ? 0.22 : i === step ? 1 : 0,
+                  // le righe già lette restano attenuate ma leggibili (contrasto ≈ 4,9:1)
+                  opacity: i < step ? 0.5 : i === step ? 1 : 0,
                   y: i > step ? 28 : 0,
                 }}
                 transition={{ duration: 0.6, ease }}
@@ -170,6 +172,7 @@ function AgeRevealStatic() {
   return (
     <div className="px-4 py-32 md:px-10">
       <div className="mx-auto max-w-6xl">
+        <h2 className="sr-only">Una cosa su di me</h2>
         <ol className="space-y-6">
           {LINES.map((line) => (
             <li key={line} className="font-heading text-3xl font-medium tracking-tight md:text-5xl">
