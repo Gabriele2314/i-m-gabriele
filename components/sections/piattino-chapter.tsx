@@ -110,7 +110,7 @@ function PiattinoScreen() {
         <div className="flex h-full items-center justify-center gap-4 md:gap-6">
           <Phone
             src={benvenuto}
-            alt="Schermata di benvenuto di Piattino con il cubo di frutta in 3D"
+            alt="Primo avvio di Piattino: nome, data di nascita, altezza, peso, quanto ti muovi e obiettivo"
             className="h-[25rem] md:h-[30rem]"
           />
           <Phone
