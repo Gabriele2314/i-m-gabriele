@@ -20,6 +20,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const OG_ALT = "I'm Gabriele: sviluppo app, creo siti, monto video e gestisco canali YouTube";
+
 const HEAD_SCRIPT = `(function(){var c=document.documentElement.classList;c.add('js');try{if(sessionStorage.getItem('intro-vista')==='1'||location.hash.length>1||matchMedia('(prefers-reduced-motion: reduce)').matches)c.add('intro-skip')}catch(e){}})()`;
 
 export const metadata: Metadata = {
@@ -33,6 +35,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "it_IT",
     url: "/",
+    siteName: "I'm Gabriele",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: OG_ALT }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "I'm Gabriele",
+    description: "App, siti e video. Ma c'è una cosa che non ti ho ancora detto…",
+    images: [{ url: "/og.png", alt: OG_ALT }],
   },
   alternates: {
     canonical: "/",
